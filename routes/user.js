@@ -5,13 +5,7 @@ const fileUpload = require("express-fileupload");
 const uid = require("uid2"); // chaine de caractères aléatoire
 const SHA256 = require("crypto-js/sha256"); // servira pour l'encryptage
 const encodeB64 = require("crypto-js/enc-base64"); // servira pour l'encodage en base 64 (imprimable)
-// import de cloudinary
-const cloudinary = require("cloudinary").v2;
-cloudinary.config({
-  cloud_name: "dxvubk3iv",
-  api_key: "955411985871483",
-  api_secret: "-B9k4sEvZmGAQe-U8XghFyZ__j4",
-});
+
 /** models **/
 const User = require("../models/User");
 
