@@ -9,6 +9,14 @@ const encodeB64 = require("crypto-js/enc-base64"); // servira pour l'encodage en
 /** models **/
 const User = require("../models/User");
 
+// import de cloudinary
+const cloudinary = require("cloudinary").v2;
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 /** lib */
 const convertToBase64 = require("../utils/convertToBase64");
 
