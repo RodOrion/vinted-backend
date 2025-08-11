@@ -3,6 +3,7 @@ const router = express.Router();
 router.use(express.json());
 const fileUpload = require("express-fileupload");
 const isAuthenticated = require("../middleware/isAuthenticated");
+
 // import de cloudinary
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
@@ -61,7 +62,13 @@ router.post(
           product_name: title,
           product_description: description,
           product_price: price,
-          product_details: [{ÉTAT: condition}, {EMPLACEMENT: city}, {MARQUE: brand}, {TAILLE: size}, {COULEUR: color}],
+          product_details: [
+            { ÉTAT: condition },
+            { EMPLACEMENT: city },
+            { MARQUE: brand },
+            { TAILLE: size },
+            { COULEUR: color },
+          ],
           product_images: uploadResponses,
           owner: id, // foundUser enregistrerait ttes les infos de l'user avec le produit
         });
@@ -201,12 +208,15 @@ router.delete(
   }
 );
 
-router.get("/offers/:id", async(req,res)=> {
+router.get("/offers/:id", async (req, res) => {
   try {
-    const offerFound = await Offer.findById(req.params.id).populate("owner", ["newsletter", "account.username"])
+    const offerFound = await Offer.findById(req.params.id).populate("owner", [
+      "newsletter",
+      "account.username",
+    ]);
     return res.status(200).json(offerFound);
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
-})
+});
 module.exports = router;
