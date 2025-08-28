@@ -70,7 +70,7 @@ app.get("/", (req,res)=> {
 // })
 
 app.all(/.*/, (req,res)=> {
-    res.status(404).json({message: "not found"})
+    res.status(404).json({message: "not found page"})
 })
 
 const PORT = process.env.PORT || 3000

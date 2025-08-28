@@ -45,24 +45,12 @@ router.post("/user/signup", fileUpload(), async (req, res) => {
     // const hash = SHA256(saltedPass).toString(encodeB64)
     const token = uid(16);
 
-    /** récupération + encodage avatar */
-    // conversion de l'img en b64 + envoi de l'img vers Cloudinary + recup de l'objet reçu
-    //console.log(req.files.avatar);
-    let uploadResponse;
-    if (req.files.avatar) {
-      const convertedPicture = convertToBase64(req.files.avatar);
-      uploadResponse = await cloudinary.uploader.upload(convertedPicture, {
-        folder: `avatars/${username}`,
-      });
-      //console.log(uploadResponse);
-    }
-
+    
     /** Création user */
     const newUser = new User({
       email: email,
       account: {
         username: username,
-        avatar: uploadResponse,
       },
       newsletter: newsletter,
       token: token,
@@ -70,9 +58,18 @@ router.post("/user/signup", fileUpload(), async (req, res) => {
       salt: salt,
     });
 
-    //console.log(newUser._id);
+    /** récupération + encodage avatar */
+    // conversion de l'img en b64 + envoi de l'img vers Cloudinary + recup de l'objet reçu
+    if (req.files && req.files.avatar) {
+      const convertedPicture = convertToBase64(req.files.avatar);
+      const uploadResponse = await cloudinary.uploader.upload(convertedPicture, {
+        folder: `avatars/${username}`,
+      });
+      newUser.account.avatar = uploadResponse
+    }
 
     await newUser.save();
+
     return res.status(201).json({
       _id: newUser._id,
       token: newUser.token,
