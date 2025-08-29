@@ -12,8 +12,8 @@ router.get("/offers", async(req,res)=> {
         /** get queries */
         const {page, title, priceMin, priceMax, sort, limit=limitInit} = req.query
 
-        let processedSort = sort;
-        processedSort = sort.replace("price-", "");
+        const processedSort = sort ? sort.replace("price-", "") : "desc";
+        //processedSort = sort.replace("price-", "");
         //limit = limit !== limitInit ? limit : limitInit;
         if (limit !== limitInit) {
             limitInit = limit;
