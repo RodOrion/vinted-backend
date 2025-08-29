@@ -18,15 +18,11 @@ const Offer = require("../models/Offer");
 /** utils/fonctions */
 const convertToBase64 = require("../utils/convertToBase64");
 
-router.post(
-  "/offer/publish",
-  isAuthenticated,
-  fileUpload(), /// ne pas oublier dès qu'on a form-data pour body
+router.post("/offer/publish", isAuthenticated, fileUpload(), /// ne pas oublier dès qu'on a form-data pour body
   async (req, res) => {
     try {
       //console.log(req.body);
-      const { title, description, price, condition, city, brand, size, color } =
-        req.body;
+      const { title, description, price, condition, city, brand, size, color } = req.body;
       //console.log(req.files);
       // Gestion des images multiples
       let uploadResponses = [];
