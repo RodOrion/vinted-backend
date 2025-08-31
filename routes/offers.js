@@ -13,8 +13,6 @@ router.get("/offers", async(req,res)=> {
         const {page, title, priceMin, priceMax, sort, limit=limitInit} = req.query
 
         const processedSort = sort ? sort.replace("price-", "") : "desc";
-        //processedSort = sort.replace("price-", "");
-        //limit = limit !== limitInit ? limit : limitInit;
         if (limit !== limitInit) {
             limitInit = limit;
         }
@@ -42,6 +40,18 @@ router.get("/offers", async(req,res)=> {
             count: offers.length,
             offers: offers
         })
+    } catch (error) {
+        return res.status(500).json({message:error.message})
+    }
+})
+
+router.get("/owner_offers/:owner_id", async(req,res) => {
+    try {
+        const owner_id = req.params.owner_id;
+        
+        const offersFound = await Offer.find({owner:owner_id});
+
+        return res.status(200).json({offers:offersFound})
     } catch (error) {
         return res.status(500).json({message:error.message})
     }
