@@ -9,7 +9,7 @@ router.get("/offers", async(req,res)=> {
     try {
         /** default values */
         let skip = 0
-        let limitInit = 5
+        let limitInit = 20
         /** get queries */
         const {page, title, priceMin, priceMax, sort, limit=limitInit} = req.query
 
