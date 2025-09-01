@@ -23,7 +23,7 @@ router.post("/offer/publish", isAuthenticated, fileUpload(), /// ne pas oublier 
     try {
       //console.log(req.body);
       const { title, description, price, condition, city, brand, size, color } = req.body;
-      //console.log(req.files);
+      ******************console.log(req.files);
       // Gestion des images multiples
       let uploadResponses = [];
 

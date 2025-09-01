@@ -3,6 +3,7 @@ const router = express.Router();
 router.use(express.json());
 /** models **/
 const Offer = require("../models/Offer");
+const isAuthenticated = require("../middleware/isAuthenticated");
 
 router.get("/offers", async(req,res)=> {
     try {
@@ -45,7 +46,7 @@ router.get("/offers", async(req,res)=> {
     }
 })
 
-router.get("/owner_offers/:owner_id", async(req,res) => {
+router.get("/owner_offers/:owner_id", isAuthenticated, async(req,res) => {
     try {
         const owner_id = req.params.owner_id;
         
