@@ -36,9 +36,12 @@ router.get("/offers", async(req,res)=> {
         console.log(filters);
         const offers = await Offer.find(filters).sort({product_price:processedSort}).select().limit(limitInit).skip(skip).populate("owner", "name")
         console.log(offers);
+
+        // cette ligne va nous retourner le nombre d'annonces trouvées en fonction des filtres
+        const count = await Offer.countDocuments(filters);
         
         return res.status(200).json({
-            count: offers.length,
+            count: count,
             offers: offers
         })
     } catch (error) {
