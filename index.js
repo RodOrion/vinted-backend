@@ -41,7 +41,7 @@ app.get("/", (req,res)=> {
 
 app.post("/payment", async (req, res) => {
   try {
-    const { currency, description, amount } = req.body;
+    const { currency, description, amount, title } = req.body;
     // On crée une intention de paiement
     const paymentIntent = await stripe.paymentIntents.create({
       // Montant de la transaction
@@ -50,6 +50,10 @@ app.post("/payment", async (req, res) => {
       currency: currency,
       // Description du produit
       description: description,
+      // Métadonnées personnalisées (très utile !)
+        metadata: {
+            product_title: title,
+        },
     });
     // On renvoie les informations de l'intention de paiement au client
     res.json(paymentIntent);
